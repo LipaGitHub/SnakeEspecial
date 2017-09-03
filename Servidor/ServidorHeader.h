@@ -1,6 +1,7 @@
 
 #include "DLLSnake\DLLSnake\dll_Header.h"
 int iLinhas, iColunas;
+HANDLE objMap2;
 void iniciaVarJogo() {
 	dadosJ->linha = iLinhas;
 	dadosJ->coluna = iColunas;
@@ -239,13 +240,24 @@ void LeMapa() {
 
 void criaMapa() {
 			int i, j;
+			objMap2 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa), nTecla);
 
+			if (objMap2 == NULL) {
+				_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
+
+			}
+
+			dadosJ->mapaSerp = (mapa **)MapViewOfFile(objMap2, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->linha)*(dadosJ->coluna));
+
+			if (dadosJ->mapaSerp == NULL) {
+				_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
+				CloseHandle(objMap2);
+
+			}
 		dadosJ->mapaJogo = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
-		dadosJ->mapaSerp = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
 
 		for (i = 0; i < dadosJ->linha; i++) {
 			dadosJ->mapaJogo[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
-			dadosJ->mapaSerp[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
 		}
 
 
