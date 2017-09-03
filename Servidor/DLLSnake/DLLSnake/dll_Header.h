@@ -8,10 +8,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-
-
-
-
 #define ficheiro "mapa.txt"
 #define NJogadores 20
 #define L 20
@@ -51,8 +47,6 @@
 		Posicao *conteudo;
 	}Serpente;
 
-
-
 	typedef struct {
 		int pid, pontuacao, id_serpente;
 		char user[50];
@@ -60,7 +54,11 @@
 	}Jogador;
 
 	typedef struct {
-		DWORD pid;
+		int pid;
+		TCHAR user[50];
+	}Ident;
+
+	typedef struct {
 		TCHAR username[50];
 		LPTSTR tecla;
 	}Envio;
