@@ -10,16 +10,16 @@ Obj *oJogo;
 Jogador cJogo[NJogadores];
 HANDLE objMap1, f1;
 HANDLE hPipe;
-LPTSTR lpvMessage;
+
 TCHAR chBuff[BUFSIZE];
 BOOL fSucess = FALSE;
 DWORD cbRead, cbToWrite, cbWriten, dwMode;
 LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\pipe20");
-Envio msg1, msg2;
+Ident msg1, msg2;
 bool ver = true;
 TCHAR nome1[50], nome2[50];
 int numj;
-
+Envio eTecla;
 DWORD WINAPI ThreadTecla(LPVOID param);
 
 void dadosInicio() {
@@ -111,7 +111,17 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	//EventoTecla = CreateEvent(NULL, TRUE, FALSE, nTecla);
 	id = GetCurrentProcessId();
 	msg1.pid = id;
-	_tcscpy(msg1.username, nome1);
+	_tcscpy(msg1.user, nome1);
+
+	cbWriten = sizeof(numj);
+	if (!WriteFile(hPipe, &numj, cbToWrite, &cbWriten, NULL)) {
+		_tprintf(TEXT("WriteFile falhou.Erro =%d"), GetLastError());
+		//exit(-1);
+	}
+	else {
+		_tprintf(TEXT("cbWriten =%d"), cbWriten);
+	}
+
 	cbToWrite = sizeof(msg1);
 	_tprintf(TEXT("A ENVIAR %d bytes: \" %d \" \n"), cbToWrite, msg1.pid);
 
@@ -125,7 +135,7 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	}
 	if (numj == 2) {
 		msg2.pid = id;
-		_tcscpy(msg2.username, nome2);
+		_tcscpy(msg2.user, nome2);
 		cbToWrite = sizeof(msg2);
 		_tprintf(TEXT("A ENVIAR %d bytes: \" %d \" \n"), cbToWrite, msg2.pid);
 
@@ -164,41 +174,47 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam) {
 	if ((nCode >= 0) && wParam == WM_KEYDOWN) {
 		kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 		if (kbdStruct.vkCode == VK_LEFT) {
-			lpvMessage = TEXT("a");
+			_tcscpy(eTecla.username, msg1.user);
+			_tcscpy(eTecla.tecla, TEXT("a"));
 		}
 		else if (kbdStruct.vkCode == VK_RIGHT) {
-			lpvMessage = TEXT("d");
+			_tcscpy(eTecla.username, msg1.user);
+			_tcscpy(eTecla.tecla, TEXT("d"));
 		}
 		else if (kbdStruct.vkCode == VK_DOWN) {
-			lpvMessage = TEXT("s");
+			_tcscpy(eTecla.username, msg1.user);
+			_tcscpy(eTecla.tecla, TEXT("s"));
 		}
 		else if (kbdStruct.vkCode == VK_UP) {
-			lpvMessage = TEXT("w");
-
+			_tcscpy(eTecla.username, msg1.user);
+			_tcscpy(eTecla.tecla, TEXT("w"));
 		}
 		else {
 		}
 		if (numj == 2) {
 			if (kbdStruct.vkCode == 0x41) {
-				lpvMessage = TEXT("a");
+				_tcscpy(eTecla.username, msg2.user);
+				_tcscpy(eTecla.tecla, TEXT("a"));
 			}
 			else if (kbdStruct.vkCode == 0x44) {
-				lpvMessage = TEXT("d");
+				_tcscpy(eTecla.username, msg2.user);
+				_tcscpy(eTecla.tecla, TEXT("d"));
 			}
 			else if (kbdStruct.vkCode == 0x53) {
-				lpvMessage = TEXT("s");
+				_tcscpy(eTecla.username, msg2.user);
+				_tcscpy(eTecla.tecla, TEXT("s"));
 			}
 			else if (kbdStruct.vkCode == 0x57) {
-				lpvMessage = TEXT("w");
-
+				_tcscpy(eTecla.username, msg2.user);
+				_tcscpy(eTecla.tecla, TEXT("w"));
 			}
 			else {
 			}
 		}
 
-		cbToWrite = (lstrlen(lpvMessage) + 1) * sizeof(TCHAR);
-		_tprintf(TEXT("A ENVIAR %d bytes: \" %s \" \n"), cbToWrite, lpvMessage);
-		if (!WriteFile(hPipe, lpvMessage, cbToWrite, &cbWriten, NULL)) {
+		cbToWrite = sizeof(eTecla);
+		
+		if (!WriteFile(hPipe, &eTecla, cbToWrite, &cbWriten, NULL)) {
 			_tprintf(TEXT("WriteFile falhou.Erro =%d"), GetLastError());
 			exit(-1);
 		}
