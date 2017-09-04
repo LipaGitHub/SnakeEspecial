@@ -25,3 +25,8 @@ Servidor/Servidor/Debug/Servidor.tlog/Servidor.lastbuildstate
 *.lastbuildstate
 Servidor/Servidor/Debug/vc140.idb
 >>>>>>> ec53a2c0c8fa27e056d228ed1cc35dbaf4787c91
+*.log
+*.pdb
+*.exe
+*.tlog
+*.obj
