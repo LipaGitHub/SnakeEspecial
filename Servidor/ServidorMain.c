@@ -8,7 +8,7 @@ KBDLLHOOKSTRUCT kbdStruct;
 //Jogador cJogo[NJogadores];
 HANDLE objMap1, f1;
 BOOL fConnected = FALSE;
-DWORD dwThreadId = 0;
+DWORD dwThreadId = 0,sbToWrite, sbWriten;
 HANDLE hPipe = INVALID_HANDLE_VALUE, hThread = NULL;
 LPSTR lpszPipename = (TEXT("\\\\.\\pipe\\pipe20"));
 
@@ -16,34 +16,41 @@ DWORD WINAPI ThreadMoveSerpente(LPVOID param);
 DWORD WINAPI ThreadAtendeCliente(LPVOID param);
 
 void valInicial() {
-	_tprintf(TEXT("Qual o tamanho de Linhas\n"));
+	_tprintf(TEXT("Qual o tamanho de Linhas do Mapa?\n"));
 	_tscanf_s(TEXT("%d"), &iLinhas);
-	_tprintf(TEXT("Qual o tamanho de Colunas\n"));
+	_tprintf(TEXT("Qual o tamanho de Colunas do Mapa?\n"));
 	_tscanf_s(TEXT("%d"), &iColunas);
+	_tprintf(TEXT("Qual o tamanho inicial das Serpentes?\n"));
+	_tscanf_s(TEXT("%d"), &iSerpente);
+	_tprintf(TEXT("Qual o numero de Serpentes Automáticas?\n"));
+	_tscanf_s(TEXT("%d"), &nAuto);
+	_tprintf(TEXT("Quantos Objetos Pretende?\n"));
+	_tscanf_s(TEXT("%d"), &nObj);
+	_tprintf(TEXT("Qual a duração dos Objetos?\n"));
+	_tscanf_s(TEXT("%d"), &dObj);
+	_tprintf(TEXT("Qual a Probabilidade de Ocorrência?\n"));
+	_tscanf_s(TEXT("%d"), &pObj);
 
 }
 
-void logar(Ident * msg) {
+int logar(Ident * msg) {
 	for (int i = 0; i < NJogadores; i++) {
 		if (dadosJ->jog[i].pid == -1) {
 			dadosJ->jog[i].pid = msg->pid;
+			dadosJ->aSerpente[i].dono = i;
 			_tcscpy(dadosJ->jog[i].user, msg->user);
+			return i;
 			break;
 		}
 	}
-
-	/*
-	
-	Fazer atribuição da cobra
-	
-	*/
+	return -1;
 
 }
 
 void criaRecursos() {
 	LARGE_INTEGER tam;
 	EventoSnake = CreateEvent(NULL, TRUE, FALSE, nEvento);
-	
+
 	//EventoTecla= OpenEvent(EVENT_ALL_ACCESS, false, nTecla);
 	//Abrir Ficheiro f1 leitura
 	/*f1 = CreateFile(ficheiro, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -63,7 +70,7 @@ void criaRecursos() {
 	}
 
 	dadosJ = (Jogo *)MapViewOfFile(objMap1, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(Jogo));
-	
+
 	if (dadosJ == NULL) {
 		_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
 		CloseHandle(objMap1);
@@ -101,22 +108,22 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	bool ver;
 
 	FILE *f;
-/*
-	//Mapeamento();
+	/*
+		//Mapeamento();
 
-	f = fopen(ficheiro, "rt");
+		f = fopen(ficheiro, "rt");
 
-	if (f == NULL) {
-		_tprintf(TEXT("Erro na abertura do ficheiro de texto"));
-		return -1;
-	}
-	*/
+		if (f == NULL) {
+			_tprintf(TEXT("Erro na abertura do ficheiro de texto"));
+			return -1;
+		}
+		*/
 	valInicial();
 	//Criar Recursos de SO2
 	criaRecursos();
 	criaMapa();
 	iniciaSerpente();
-	
+
 
 
 	hThreadMoveSerp = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadMoveSerpente, NULL, 0, &threadId);
@@ -181,7 +188,7 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 	DWORD cbBytesRead = 0, cbReplyBytes = 0, cbWriten = 0;
 	BOOL fSucess = FALSE;
 	HANDLE hPipe_1 = NULL;
-	int numJ;
+	int numJ, idSerpCli;
 	bool startGame = true;
 	if (param == NULL) {
 		_tprintf(TEXT("\nERRO - o Handle enviado no param é nulo \n"));
@@ -198,7 +205,7 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 	hPipe_1 = (HANDLE)param;
 	while (1) {
 		if (startGame) {
-			
+
 			fSucess = ReadFile(hPipe_1, numJ, sizeof(numJ), &cbBytesRead, NULL);
 			if (!fSucess || cbBytesRead == 0) {
 				if (GetLastError() == ERROR_BROKEN_PIPE)
@@ -208,16 +215,27 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 				break;
 			}
 
-		fSucess = ReadFile(hPipe_1, msg, cbToRead, &cbBytesRead, NULL);
+			fSucess = ReadFile(hPipe_1, msg, cbToRead, &cbBytesRead, NULL);
 
-		if (!fSucess || cbBytesRead == 0) {
-			if (GetLastError() == ERROR_BROKEN_PIPE)
-				_tprintf(TEXT("Cliente Desligou-se. ERRO = %d"), GetLastError());
-			else
-				_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
-			break;
-		}
-		logar(msg);
+			if (!fSucess || cbBytesRead == 0) {
+				if (GetLastError() == ERROR_BROKEN_PIPE)
+					_tprintf(TEXT("Cliente Desligou-se. ERRO = %d"), GetLastError());
+				else
+					_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
+				break;
+			}
+			idSerpCli = logar(msg);
+			if (idSerpCli != -1) {
+				/* Envia Cliente*/
+				sbToWrite = sizeof(idSerpCli);
+				if (!WriteFile(hPipe_1, &idSerpCli, sbToWrite, &sbWriten, NULL)) {
+					_tprintf(TEXT("WriteFile falhou.Erro =%d"), GetLastError());
+					//exit(-1);
+				}
+				else {
+					_tprintf(TEXT("cbWriten =%d"), cbWriten);
+				}
+			}
 			if (numJ == 2) {
 				fSucess = ReadFile(hPipe_1, msg, cbToRead, &cbBytesRead, NULL);
 
@@ -228,10 +246,14 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 						_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
 					break;
 				}
-				logar(msg);
+				idSerpCli = logar(msg);
+				if (idSerpCli != -1) {
+					/* Envia Cliente*/
+				}
 			}
 			startGame = false;
-		}else{
+		}
+		else {
 			fSucess = ReadFile(hPipe_1, pchRequest, cbToWrite, &cbBytesRead, NULL);
 			if (!fSucess || cbBytesRead == 0) {
 				if (GetLastError() == ERROR_BROKEN_PIPE)
@@ -257,10 +279,8 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 			else if (!_tcscmp(pchRequest->tecla, _T("w"))) {
 				direcaoTeste = 'w';
 			}
-			for (int i = 0; i < 20; i++) {
-				if(!_tcscmp(dadosJ->jog[i].user,pchRequest->username))
-					moverDirecao(&dadosJ->aSerpente[dadosJ->jog[i].id_serpente], direcaoTeste);
-			}
+			
+					moverDirecao(&dadosJ->aSerpente[pchRequest->idSerp], direcaoTeste);
 			
 			//_tprintf(TEXT("%s"),pchRequest);
 

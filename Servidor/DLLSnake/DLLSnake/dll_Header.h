@@ -41,16 +41,15 @@ typedef struct {
 }mapa;
 
 typedef struct {
-	int id, tamanho, velocidade, durEfeito;
+	int tamanho, velocidade, durEfeito, dono;
 	char direcao;
 	bool inverte, morte;
 	Posicao *conteudo;
 }Serpente;
 
 typedef struct {
-	int pid, pontuacao, id_serpente;
+	int pid, pontuacao;
 	char user[50];
-
 }Jogador;
 
 typedef struct {
@@ -61,6 +60,7 @@ typedef struct {
 typedef struct {
 	TCHAR username[50];
 	LPTSTR tecla;
+	int idSerp;
 }Envio;
 
 typedef struct {
