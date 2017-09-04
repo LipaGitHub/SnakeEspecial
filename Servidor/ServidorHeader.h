@@ -1,6 +1,7 @@
 
 #include "DLLSnake\DLLSnake\dll_Header.h"
 int iLinhas, iColunas;
+HANDLE objMap2, objMap3;
 void iniciaVarJogo() {
 	dadosJ->linha = iLinhas;
 	dadosJ->coluna = iColunas;
@@ -13,11 +14,11 @@ void iniciaVarJogo() {
 
 
 void iniciaSerpente() {
-	
+
 	dadosJ->aSerpente[0].direcao = 's';
 
 	dadosJ->aSerpente[0].tamanho = 5;
-	dadosJ->aSerpente[0].conteudo = (Posicao *) malloc(sizeof(Posicao)*(dadosJ->aSerpente[0]).tamanho);
+	dadosJ->aSerpente[0].conteudo = (Posicao *)malloc(sizeof(Posicao)*(dadosJ->aSerpente[0]).tamanho);
 	dadosJ->aSerpente[0].morte = false;
 	dadosJ->aSerpente[0].conteudo[0].x = 2; dadosJ->aSerpente[0].conteudo[0].y = 2;
 	dadosJ->aSerpente[0].conteudo[1].x = 3; dadosJ->aSerpente[0].conteudo[1].y = 2;
@@ -85,7 +86,7 @@ bool moveCima(Serpente* s) {
 	aux = (Posicao *)malloc(sizeof(Posicao)* s->tamanho);
 	aux[0].x = s->conteudo[0].x;
 	aux[0].y = s->conteudo[0].y - 1;
-	for (int i = 1; i < s->tamanho; i++){
+	for (int i = 1; i < s->tamanho; i++) {
 		aux[i].x = s->conteudo[i - 1].x;
 		aux[i].y = s->conteudo[i - 1].y;
 	}
@@ -101,7 +102,7 @@ bool moveBaixo(Serpente* s) {
 	aux = (Posicao *)malloc(sizeof(Posicao)* s->tamanho);
 	aux[0].x = s->conteudo[0].x;
 	aux[0].y = s->conteudo[0].y + 1;
-	for (int i = 1; i < s->tamanho; i++){
+	for (int i = 1; i < s->tamanho; i++) {
 		aux[i].x = s->conteudo[i - 1].x;
 		aux[i].y = s->conteudo[i - 1].y;
 	}
@@ -135,9 +136,9 @@ void mostraCobra(Serpente sAux) {
 }
 */
 void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
-	
-	int px,py;
-	
+
+	int px, py;
+
 	if (s->direcao == 'w') {
 		py = s->conteudo->y;
 		px = s->conteudo->x;
@@ -156,7 +157,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		px = s->conteudo->x;
 		py++;
 		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
-				s->morte = true;
+			s->morte = true;
 		}
 		else {
 			moveBaixo(s);
@@ -177,7 +178,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		py = s->conteudo->y;
 		px = s->conteudo->x;
 		px++;
-		
+
 		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
 			s->morte = true;
 		}
@@ -202,7 +203,7 @@ char inverte(char t) {
 		return 'a';
 	}
 }
-bool moverDirecao(Serpente *s,char t) {
+bool moverDirecao(Serpente *s, char t) {
 	t = tolower(t);
 	if (s->direcao == inverte(t)) {
 		return false;
@@ -223,8 +224,8 @@ void LeMapa() {
 		fclose(f);
 	}
 
-	for (i = 0; i<L; i++) {
-		for (j = 0; j<C; j++) {
+	for (i = 0; i < L; i++) {
+		for (j = 0; j < C; j++) {
 			dadosJ->mapaJogo[i][j].y = i;
 			dadosJ->mapaJogo[i][j].x = j;
 			fscanf_s(f, "%c", &(dadosJ->mapaJogo[i][j].caracter));
@@ -238,52 +239,76 @@ void LeMapa() {
 }
 
 void criaMapa() {
-			int i, j;
+	int i, j;
+	objMap2 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa)*(dadosJ->linha), TEXT("nLinhas"));
 
-		dadosJ->mapaJogo = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
-		dadosJ->mapaSerp = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
+	if (objMap2 == NULL) {
+		_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
 
-		for (i = 0; i < dadosJ->linha; i++) {
-			dadosJ->mapaJogo[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
-			dadosJ->mapaSerp[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
+	}
+
+	dadosJ->mapaSerp = (mapa *)MapViewOfFile(objMap2, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->linha));
+
+	if (dadosJ->mapaSerp == NULL) {
+		_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
+		CloseHandle(objMap2);
+
+	}
+	dadosJ->mapaJogo = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
+
+	for (i = 0; i < dadosJ->linha; i++) {
+		dadosJ->mapaJogo[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
+		objMap3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa)*(dadosJ->coluna), TEXT("nColunas"));
+
+		if (objMap3 == NULL) {
+			_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
+
 		}
 
+		dadosJ->mapaSerp[i] = (mapa *)MapViewOfFile(objMap3, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->coluna));
 
-		for (i = 0; i < dadosJ->linha; i++) {
-			for (j = 0; j < dadosJ->coluna; j++) {
-				if (i == 0 || i == (dadosJ->linha - 1)) {
-					dadosJ->mapaJogo[i][j].caracter = '1';
-				}
-				else if (j==0 || j ==(dadosJ->coluna -1)){
-					dadosJ->mapaJogo[i][j].caracter = '0';
-				}
-				else
-					dadosJ->mapaJogo[i][j].caracter = ' ';
-				
-			}
+		if (dadosJ->mapaSerp[i] == NULL) {
+			_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
+			CloseHandle(objMap3);
+
 		}
-
-
-		return;
 	}
 
 
+	for (i = 0; i < dadosJ->linha; i++) {
+		for (j = 0; j < dadosJ->coluna; j++) {
+			if (i == 0 || i == (dadosJ->linha - 1)) {
+				dadosJ->mapaJogo[i][j].caracter = '1';
+			}
+			else if (j == 0 || j == (dadosJ->coluna - 1)) {
+				dadosJ->mapaJogo[i][j].caracter = '0';
+			}
+			else
+				dadosJ->mapaJogo[i][j].caracter = ' ';
+		}
+	}
+
+
+	return;
+}
+
+
 void addSerpente() {
-	
+
 	for (int i = 0; i < dadosJ->linha; i++) {
 		for (int j = 0; j < dadosJ->coluna; j++) {
 			dadosJ->mapaSerp[i][j].caracter = dadosJ->mapaJogo[i][j].caracter;
 		}
 	}
 	for (int i = 0; i < NJogadores; i++) {
-		if(dadosJ->aSerpente[i].tamanho>0)
+		if (dadosJ->aSerpente[i].tamanho > 0)
 			if ((dadosJ->aSerpente[i]).morte == false) {
 				for (int k = 0; k < dadosJ->aSerpente[i].tamanho; k++) {
 					dadosJ->mapaSerp[dadosJ->aSerpente[i].conteudo[k].y][dadosJ->aSerpente[i].conteudo[k].x].caracter = '3';
 				}
 			}
 	}
-	
+
 }
 
 

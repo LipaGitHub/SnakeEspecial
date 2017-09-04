@@ -3,9 +3,9 @@
 HHOOK hook;
 KBDLLHOOKSTRUCT kbdStruct;
 
-Serpente *sJogo;
-Obj *oJogo;
-Jogador cJogo[NJogadores];
+//Serpente *sJogo;
+//Obj *oJogo;
+//Jogador cJogo[NJogadores];
 HANDLE objMap1, f1;
 BOOL fConnected = FALSE;
 DWORD dwThreadId = 0;
@@ -23,7 +23,22 @@ void valInicial() {
 
 }
 
+void logar(Ident * msg) {
+	for (int i = 0; i < NJogadores; i++) {
+		if (dadosJ->jog[i].pid == -1) {
+			dadosJ->jog[i].pid = msg->pid;
+			_tcscpy(dadosJ->jog[i].user, msg->user);
+			break;
+		}
+	}
 
+	/*
+	
+	Fazer atribuição da cobra
+	
+	*/
+
+}
 
 void criaRecursos() {
 	LARGE_INTEGER tam;
@@ -51,7 +66,7 @@ void criaRecursos() {
 	
 	if (dadosJ == NULL) {
 		_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
-		CloseHandle(f1);
+		CloseHandle(objMap1);
 
 	}
 	_tprintf(TEXT("Criação do Pipe Para os CLientes"));
@@ -99,9 +114,9 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	valInicial();
 	//Criar Recursos de SO2
 	criaRecursos();
-
-	iniciaSerpente();
 	criaMapa();
+	iniciaSerpente();
+	
 
 
 	hThreadMoveSerp = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadMoveSerpente, NULL, 0, &threadId);
@@ -159,39 +174,40 @@ DWORD WINAPI ThreadMoveSerpente(LPVOID param) {
 DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 	char direcaoTeste;
 	HANDLE hHeap = GetProcessHeap();
-	DWORD cbToWrite = (lstrlen(TEXT("a")) + 1) * sizeof(TCHAR);
-	DWORD cbToRead = sizeof(Envio);
-	TCHAR * pchRequest = (TCHAR *)HeapAlloc(hHeap, 0, cbToWrite);
-	TCHAR * pchReply = (TCHAR*)HeapAlloc(hHeap, 0, cbToWrite);
-	Envio * msg = (Envio*)HeapAlloc(hHeap, 0, cbToRead);
+	DWORD cbToWrite = sizeof(Envio);
+	DWORD cbToRead = sizeof(Ident);
+	Envio * pchRequest = (Envio *)HeapAlloc(hHeap, 0, cbToWrite);
+	Ident * msg = (Envio*)HeapAlloc(hHeap, 0, cbToRead);
 	DWORD cbBytesRead = 0, cbReplyBytes = 0, cbWriten = 0;
 	BOOL fSucess = FALSE;
 	HANDLE hPipe_1 = NULL;
+	int numJ;
 	bool startGame = true;
 	if (param == NULL) {
 		_tprintf(TEXT("\nERRO - o Handle enviado no param é nulo \n"));
-		if (pchReply != NULL)
-			HeapFree(hHeap, 0, pchReply);
 		if (pchRequest != NULL)
 			HeapFree(hHeap, 0, pchRequest);
 		return (DWORD)-1;
 	}
 	if (pchRequest == NULL) {
 		_tprintf("Não houve Memória");
-		if (pchReply != NULL)
-			HeapFree(hHeap, 0, pchReply);
 		return (DWORD)-1;
 	}
-	if (pchReply == NULL) {
-		_tprintf("Não houve Memória");
-		if (pchRequest != NULL)
-			HeapFree(hHeap, 0, pchRequest);
-		return (DWORD)-1;
-	}
+
 	_tprintf(TEXT("THREAD do servidor - a receber Mensagens\n\n\n"));
 	hPipe_1 = (HANDLE)param;
 	while (1) {
 		if (startGame) {
+			
+			fSucess = ReadFile(hPipe_1, numJ, sizeof(numJ), &cbBytesRead, NULL);
+			if (!fSucess || cbBytesRead == 0) {
+				if (GetLastError() == ERROR_BROKEN_PIPE)
+					_tprintf(TEXT("Cliente Desligou-se. ERRO = %d"), GetLastError());
+				else
+					_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
+				break;
+			}
+
 		fSucess = ReadFile(hPipe_1, msg, cbToRead, &cbBytesRead, NULL);
 
 		if (!fSucess || cbBytesRead == 0) {
@@ -201,17 +217,18 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 				_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
 			break;
 		}
+		logar(msg);
+			if (numJ == 2) {
+				fSucess = ReadFile(hPipe_1, msg, cbToRead, &cbBytesRead, NULL);
 
-		_tprintf(TEXT("idRead= %d"), msg->pid);
-		//_tprintf(TEXT("idRead= %s"), msg->username);
-
-		
-			for (int i = 0; i < NJogadores; i++) {
-				if (dadosJ->jog[i].pid == -1) {
-					dadosJ->jog[i].pid = msg->pid;
-					//_tcscpy(dadosJ->jog[i].user, msg->username);
+				if (!fSucess || cbBytesRead == 0) {
+					if (GetLastError() == ERROR_BROKEN_PIPE)
+						_tprintf(TEXT("Cliente Desligou-se. ERRO = %d"), GetLastError());
+					else
+						_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
 					break;
 				}
+				logar(msg);
 			}
 			startGame = false;
 		}else{
@@ -223,23 +240,28 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 					_tprintf(TEXT("ReadFile falhou. ERRO = %d"), GetLastError());
 				break;
 			}
-			_tprintf(TEXT("%d Read \n %d Writen"), cbBytesRead, cbToWrite);
+			//_tprintf(TEXT("%d Read \n %d Writen"), cbBytesRead, cbToWrite);
 
-			_tprintf(TEXT("%s"), pchRequest);
+			//_tprintf(TEXT("%s"), pchRequest);
 			//aqui processar os dados
-			if (!_tcscmp(pchRequest, _T("a"))) {
+
+			if (!_tcscmp(pchRequest->tecla, _T("a"))) {
 				direcaoTeste = 'a';
 			}
-			else if (!_tcscmp(pchRequest, _T("s"))) {
+			else if (!_tcscmp(pchRequest->tecla, _T("s"))) {
 				direcaoTeste = 's';
 			}
-			else if (!_tcscmp(pchRequest, _T("d"))) {
+			else if (!_tcscmp(pchRequest->tecla, _T("d"))) {
 				direcaoTeste = 'd';
 			}
-			else if (!_tcscmp(pchRequest, _T("w"))) {
+			else if (!_tcscmp(pchRequest->tecla, _T("w"))) {
 				direcaoTeste = 'w';
 			}
-			moverDirecao(&dadosJ->aSerpente[0], direcaoTeste);
+			for (int i = 0; i < 20; i++) {
+				if(!_tcscmp(dadosJ->jog[i].user,pchRequest->username))
+					moverDirecao(&dadosJ->aSerpente[dadosJ->jog[i].id_serpente], direcaoTeste);
+			}
+			
 			//_tprintf(TEXT("%s"),pchRequest);
 
 			//PROCESSAR OS DADOS ENVIADOS
@@ -255,7 +277,6 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 	CloseHandle(hPipe_1);
 
 	HeapFree(hHeap, 0, pchRequest);
-	HeapFree(hHeap, 0, pchReply);
 	_tprintf(TEXT("Thread a termninar \n"));
 	return 1;
 }

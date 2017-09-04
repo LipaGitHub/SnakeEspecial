@@ -2,7 +2,7 @@
 Jogo *dadosJ;
 HANDLE EventoSnake, EventoTecla;
 
-TCHAR snake[] = TEXT("mpSnake"), nEvento[] = TEXT("eventoSnake"), nTecla[] = TEXT("Evento Tecla");
+TCHAR snake[] = TEXT("mpSnake"), nEvento[] = TEXT("eventoSnake");
 
 void imprimeMapa() {
 	system("cls");
