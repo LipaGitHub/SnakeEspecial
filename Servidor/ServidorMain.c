@@ -7,7 +7,6 @@ KBDLLHOOKSTRUCT kbdStruct;
 //Obj *oJogo;
 //Jogador cJogo[NJogadores];
 HANDLE objMap1, f1;
-HANDLE objMap2;
 BOOL fConnected = FALSE;
 DWORD dwThreadId = 0;
 HANDLE hPipe = INVALID_HANDLE_VALUE, hThread = NULL;
@@ -115,9 +114,9 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	valInicial();
 	//Criar Recursos de SO2
 	criaRecursos();
-
-	iniciaSerpente();
 	criaMapa();
+	iniciaSerpente();
+	
 
 
 	hThreadMoveSerp = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadMoveSerpente, NULL, 0, &threadId);

@@ -26,58 +26,58 @@
 
 
 
-	extern TP_SO2_DLL_API HANDLE EventoSnake, EventoTecla;
+extern TP_SO2_DLL_API HANDLE EventoSnake, EventoTecla;
 
-	extern TP_SO2_DLL_API TCHAR snake[], nEvento[] , nTecla[] ;
+extern TP_SO2_DLL_API TCHAR snake[], nEvento[], nColuna[], nLinha[];
 
 
-	typedef struct {
-		int x, y;
-	} Posicao;
+typedef struct {
+	int x, y;
+} Posicao;
 
-	typedef struct {
-		int y, x;
-		char caracter;
-	}mapa;
+typedef struct {
+	int y, x;
+	char caracter;
+}mapa;
 
-	typedef struct {
-		int id, tamanho, velocidade, durEfeito;
-		char direcao;
-		bool inverte, morte;
-		Posicao *conteudo;
-	}Serpente;
+typedef struct {
+	int id, tamanho, velocidade, durEfeito;
+	char direcao;
+	bool inverte, morte;
+	Posicao *conteudo;
+}Serpente;
 
-	typedef struct {
-		int pid, pontuacao, id_serpente;
-		char user[50];
+typedef struct {
+	int pid, pontuacao, id_serpente;
+	char user[50];
 
-	}Jogador;
+}Jogador;
 
-	typedef struct {
-		int pid;
-		TCHAR user[50];
-	}Ident;
+typedef struct {
+	int pid;
+	TCHAR user[50];
+}Ident;
 
-	typedef struct {
-		TCHAR username[50];
-		LPTSTR tecla;
-	}Envio;
+typedef struct {
+	TCHAR username[50];
+	LPTSTR tecla;
+}Envio;
 
-	typedef struct {
-		int id, duracao, probabilidade;
-		Posicao localizacao;
-	}Obj;
+typedef struct {
+	int id, duracao, probabilidade;
+	Posicao localizacao;
+}Obj;
 
-	typedef struct {
-		int linha, coluna;
-		mapa **mapaJogo, **mapaSerp;
-		Serpente aSerpente[NJogadores];
-		Jogador jog[NJogadores];
-		Obj * objetos;
+typedef struct {
+	int linha, coluna;
+	mapa **mapaJogo, **mapaSerp;
+	Serpente aSerpente[NJogadores];
+	Jogador jog[NJogadores];
+	Obj * objetos;
 
-	}Jogo;
+}Jogo;
 
-	extern TP_SO2_DLL_API Jogo *dadosJ;
+extern TP_SO2_DLL_API Jogo *dadosJ;
 
-	TP_SO2_DLL_API void imprimeMapa();
+TP_SO2_DLL_API void imprimeMapa();
 
