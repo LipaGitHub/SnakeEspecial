@@ -1,14 +1,21 @@
 
 #include "DLLSnake\DLLSnake\dll_Header.h"
-int iLinhas, iColunas;
+int iLinhas, iColunas, iSerpente, nObj, dObj, pObj, nAuto;
 HANDLE objMap2, objMap3;
 void iniciaVarJogo() {
+
 	dadosJ->linha = iLinhas;
 	dadosJ->coluna = iColunas;
 	for (int i = 0; i < NJogadores; i++) {
-		dadosJ->aSerpente->id = -1;
-		dadosJ->jog->pid = -1;
-		dadosJ->jog->id_serpente = -1;
+		dadosJ->aSerpente[i].tamanho = iSerpente;
+		dadosJ->jog[i].pid = -1;
+		dadosJ->aSerpente[i].dono = -1;
+	}
+	dadosJ->objetos = (Obj *)malloc(sizeof(Obj*)*nObj);
+	for (int i = 0; i < nObj; i++) {
+		dadosJ->objetos[i].duracao = dObj;
+		dadosJ->objetos[i].id = i;
+		dadosJ->objetos[i].probabilidade = pObj;
 	}
 }
 

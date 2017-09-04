@@ -30,3 +30,5 @@ Servidor/Servidor/Debug/vc140.idb
 *.exe
 *.tlog
 *.obj
+*.log
+Servidor/Client/Debug/Cliente.tlog/Cliente.write.1u.tlog
