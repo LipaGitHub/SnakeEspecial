@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  ClienteMain.c
 c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(227): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
@@ -56,3 +57,11 @@ c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(148): warning C4700:
 c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(310): warning C4716: 'ThreadTecla': must return a value
   LINK : C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe not found or not built by the last incremental link; performing full link
   Client.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe
+=======
+<<<<<<< HEAD
+﻿  Client.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Cliente.exe
+  Client.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Cliente.pdb (Full PDB)
+=======
+﻿  Client.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe
+>>>>>>> 8c442e0cfacec2373a6a1eb8a57f9fa3f3711af3
+>>>>>>> origin/master

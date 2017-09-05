@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  ServidorMain.c
 c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(227): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
@@ -21,3 +22,11 @@ c:\users\lipap\desktop\snakeespecial\servidor\servidormain.c(187): warning C4133
 c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(212): warning C4715: 'inverte': not all control paths return a value
 c:\users\lipap\desktop\snakeespecial\servidor\servidormain.c(209): warning C4700: uninitialized local variable 'numJ' used
   Servidor.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Servidor.exe
+=======
+<<<<<<< HEAD
+﻿  Servidor.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Servidor.exe
+  Servidor.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Servidor.pdb (Full PDB)
+=======
+﻿  Servidor.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Servidor.exe
+>>>>>>> 8c442e0cfacec2373a6a1eb8a57f9fa3f3711af3
+>>>>>>> origin/master
