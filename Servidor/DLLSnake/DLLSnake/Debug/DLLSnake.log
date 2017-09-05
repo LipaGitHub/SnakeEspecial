@@ -1,3 +1,5 @@
 ﻿  dll_Source.c
-     Creating library C:\Users\lipap\Desktop\SnakeEspecial\Servidor\DLLSnake\Debug\DLLSnake.lib and object C:\Users\lipap\Desktop\SnakeEspecial\Servidor\DLLSnake\Debug\DLLSnake.exp
-  DLLSnake.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\DLLSnake\Debug\DLLSnake.dll
+c:\users\franc\documents\github\snakeespecial\servidor\dllsnake\dllsnake\dll_source.c(39): warning C4047: 'function': 'const wchar_t *const ' differs in levels of indirection from 'char'
+c:\users\franc\documents\github\snakeespecial\servidor\dllsnake\dllsnake\dll_source.c(39): warning C4024: 'wprintf': different types for formal and actual parameter 1
+  DLLSnake.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\DLLSnake\Debug\DLLSnake.dll
+  DLLSnake.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\DLLSnake\Debug\DLLSnake.pdb (Full PDB)

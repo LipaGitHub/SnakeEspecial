@@ -35,7 +35,7 @@ void dadosInicio() {
 		_tprintf(TEXT("[JOGADOR 2 - LETRAS] Qual o seu nome?\n"));
 		_fgetts(nome2, 50, stdin);
 	}
-	if (dadosJ->jog[0].pid != -1) {
+	if (dadosJ.jog[0].pid != -1) {
 		do {
 			_tprintf(TEXT("Já existe um jogo ativo. O que pretende fazer?\n"));
 			_tprintf(TEXT("1 - Jogar Jogo\n"));
@@ -56,7 +56,7 @@ void criaRecursos() {
 	//Saber o tamanho do ficheiro 1 em bytes
 	//GetFileSizeEx(f1, &tam);
 	//Criar um objecto para o mapeamento para o ficheiro aberto
-
+	/*
 	objMap1 = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, snake);
 
 	if (objMap1 == NULL) {
@@ -96,7 +96,7 @@ void criaRecursos() {
 
 
 	}
-
+	*/
 
 	return 0;
 

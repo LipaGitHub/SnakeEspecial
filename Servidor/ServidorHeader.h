@@ -26,6 +26,23 @@ void iniciaVarJogo() {
 	}
 }
 
+void imprimeMapa_local() {
+	system("cls");
+	int i, j;
+	for (i = 0; i < dadosJ.mapaJogo.nLinhas; i++) {
+		for (j = 0; j < dadosJ.mapaJogo.nColunas; j++) {
+			if (dadosJ.mapaJogo.conteudo[i][j].caracter == '1')
+				_tprintf(TEXT("-"));
+			else if (dadosJ.mapaJogo.conteudo[i][j].caracter == '0')
+				_tprintf(TEXT("*"));
+			else if (dadosJ.mapaJogo.conteudo[i][j].caracter == '2')
+				_tprintf(TEXT(" "));
+			else
+				_tprintf(dadosJ.mapaJogo.conteudo[i][j].caracter);
+		}
+		_tprintf(TEXT("\n"));
+	}
+}
 
 void iniciaSerpente() {
 	/*

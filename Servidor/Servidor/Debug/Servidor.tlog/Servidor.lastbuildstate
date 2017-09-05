@@ -1,6 +1,2 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
-<<<<<<< HEAD
 Debug|Win32|C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\|
-=======
-Debug|Win32|C:\Users\lipap\Desktop\SnakeEspecial\Servidor\|
->>>>>>> 8c442e0cfacec2373a6a1eb8a57f9fa3f3711af3

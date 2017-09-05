@@ -1,67 +1,62 @@
-<<<<<<< HEAD
 ﻿  ClienteMain.c
-c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(227): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(41): warning C4047: 'function': 'const wchar_t *const ' differs in levels of indirection from 'char'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(41): warning C4024: 'wprintf': different types for formal and actual parameter 1
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(251): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(238): warning C4473: 'fscanf_s' : not enough arguments passed for format string
-  c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(238): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
-  c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(238): note: the missing variadic argument 2 is required by format string '%c'
-  c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(238): note: this argument is used as a buffer size
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(80): warning C4002: too many actual parameters for macro 'TEXT'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(93): warning C4133: 'function': incompatible types - from 'char [52]' to 'const wchar_t *const '
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(101): warning C4098: 'criaRecursos': 'void' function returning a value
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(80): warning C4473: 'wprintf' : not enough arguments passed for format string
-  c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(80): note: placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-  c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(80): note: the missing variadic argument 1 is required by format string '%d'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(49): warning C4101: 'tam': unreferenced local variable
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(148): warning C4022: 'ReadFile': pointer mismatch for actual parameter 2
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(175): warning C4022: 'ReadFile': pointer mismatch for actual parameter 2
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(124): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(262): warning C4473: 'fscanf_s' : not enough arguments passed for format string
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(262): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(262): note: the missing variadic argument 2 is required by format string '%c'
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(262): note: this argument is used as a buffer size
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(273): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(305): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(308): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(311): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(314): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(317): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(320): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(101): warning C4098: 'criaRecursos': 'void' function returning a value
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(49): warning C4101: 'tam': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(148): warning C4022: 'ReadFile': pointer mismatch for actual parameter 2
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(175): warning C4022: 'ReadFile': pointer mismatch for actual parameter 2
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(124): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(161): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(161): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(109): warning C4101: 'u': unreferenced local variable
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(223): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(109): warning C4101: 'u': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(223): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(224): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(224): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(228): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(228): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(229): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(229): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(233): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(233): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(234): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(234): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(238): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(238): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(239): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(239): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(259): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(259): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(260): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(260): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(264): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(264): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(265): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(265): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(269): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(269): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(270): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(270): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(274): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(274): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(275): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(275): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
-c:\users\lipap\desktop\snakeespecial\servidor\servidorheader.h(212): warning C4715: 'inverte': not all control paths return a value
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(148): warning C4700: uninitialized local variable 'idSe' used
-c:\users\lipap\desktop\snakeespecial\servidor\clientemain.c(310): warning C4716: 'ThreadTecla': must return a value
-  LINK : C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe not found or not built by the last incremental link; performing full link
-  Client.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe
-=======
-<<<<<<< HEAD
-﻿  Client.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Cliente.exe
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(236): warning C4715: 'inverte': not all control paths return a value
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(310): warning C4716: 'ThreadTecla': must return a value
+c:\users\franc\documents\github\snakeespecial\servidor\clientemain.c(148): warning C4700: uninitialized local variable 'idSe' used
+  Client.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Cliente.exe
   Client.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Cliente.pdb (Full PDB)
-=======
-﻿  Client.vcxproj -> C:\Users\lipap\Desktop\SnakeEspecial\Servidor\Debug\Cliente.exe
->>>>>>> 8c442e0cfacec2373a6a1eb8a57f9fa3f3711af3
->>>>>>> origin/master
