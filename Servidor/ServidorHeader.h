@@ -284,7 +284,7 @@ void criaMapa() {
 				dadosJ.mapaJogo.conteudo[i][j].caracter = '0';
 			}
 			else
-				dadosJ.mapaJogo.conteudo[i][j].caracter = ' ';
+				dadosJ.mapaJogo.conteudo[i][j].caracter = '2';
 		}
 	}
 	if (nAuto != 0) {
@@ -324,8 +324,17 @@ void criaMapa() {
 		}
 	}
 
-
-
+	for (int i = 0; i < nAuto; i++) {
+		int x, y;
+		char c = 'a';
+		for (j = 0; i < iSerpente; j++) {
+			x = dadosJ.aSerpente[i].conteudo[j].x;
+			y = dadosJ.aSerpente[i].conteudo[j].y;
+			dadosJ.mapaJogo.conteudo[x][y].caracter = c;
+			
+		}
+		c++;
+	}
 	return;
 }
 
