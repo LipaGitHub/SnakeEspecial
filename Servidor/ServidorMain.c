@@ -113,7 +113,7 @@ void criaRecursos() {
 	}
 	}
 	*/
-	iniciaVarJogo();
+	
 
 	return 0;
 
@@ -153,12 +153,14 @@ int _tmain(int argc, TCHAR ** argv[]) {
 		*/
 	valInicial();
 	//Criar Recursos de SO2
-	criaRecursos();
+	//criaRecursos();
+	
+	iniciaVarJogo(); 
 	criaMapa();
 	iniciaSerpente();
 
 
-
+	/*
 	hThreadMoveSerp = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadMoveSerpente, NULL, 0, &threadId);
 
 	if (hThreadMoveSerp == NULL) {
@@ -196,6 +198,10 @@ int _tmain(int argc, TCHAR ** argv[]) {
 	
 
 	WaitForSingleObject(hThreadMoveSerp, INFINITE);
+	*/
+
+	imprimeMapa_local();
+	system("pause");
 	return 0;
 }
 

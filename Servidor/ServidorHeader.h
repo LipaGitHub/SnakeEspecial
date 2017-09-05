@@ -1,8 +1,6 @@
 
 #include "DLLSnake\DLLSnake\dll_Header.h"
-#include <math.h>
-#include <time.h>
-#include <stdlib.h>
+
 
 Jogo dadosJ;
 int iLinhas, iColunas, iSerpente, nObj, dObj, pObj, nAuto;
@@ -27,8 +25,11 @@ void iniciaVarJogo() {
 }
 
 void imprimeMapa_local() {
-	system("cls");
 	int i, j;
+	char auxC;
+
+	//system(TEXT("cls"));
+	
 	for (i = 0; i < dadosJ.mapaJogo.nLinhas; i++) {
 		for (j = 0; j < dadosJ.mapaJogo.nColunas; j++) {
 			if (dadosJ.mapaJogo.conteudo[i][j].caracter == '1')
@@ -37,8 +38,10 @@ void imprimeMapa_local() {
 				_tprintf(TEXT("*"));
 			else if (dadosJ.mapaJogo.conteudo[i][j].caracter == '2')
 				_tprintf(TEXT(" "));
-			else
-				_tprintf(dadosJ.mapaJogo.conteudo[i][j].caracter);
+			else {
+				auxC = dadosJ.mapaJogo.conteudo[i][j].caracter;
+				_tprintf(TEXT("%c"),auxC);
+			}
 		}
 		_tprintf(TEXT("\n"));
 	}
@@ -270,6 +273,8 @@ void LeMapa() {
 }
 
 void criaMapa() {
+	int x, y;
+	char c = 'a';
 	srand(time(NULL));   // should only be called once
 	int r = rand();
 	int i, j, calcX, calcY, auxX, dir;
@@ -292,11 +297,11 @@ void criaMapa() {
 		calcX = dadosJ.mapaJogo.nColunas - 2;
 		calcY = dadosJ.mapaJogo.nLinhas - 2;
 
-		areaDisp = calcY - 2 / nAuto;
+		areaDisp = (calcY - 2) / nAuto;
 		areaDisp = trunc(areaDisp);
-		r = rand()*(calcX - 2 - iSerpente) + 2;
 
 		for (i = 0; i < nAuto; i++) {
+			r = rand() % (calcX - 2 - iSerpente) + 2;
 			dadosJ.aSerpente[i].conteudo = (Posicao*)malloc(sizeof(Posicao)*iSerpente);
 			dadosJ.aSerpente[i].dono = -2;
 
@@ -317,21 +322,21 @@ void criaMapa() {
 			auxX = areaDisp;
 			for (j = 0; j < iSerpente; j++) {
 				dadosJ.aSerpente[i].conteudo[j].x = r;
-				dadosJ.aSerpente[i].conteudo[j].y = areaDisp*(j + 1);
+				dadosJ.aSerpente[i].conteudo[j].y = areaDisp*(i + 1); // erradoooooooo
 				r++;
+				_tprintf(TEXT("(%d,%d)"),dadosJ.aSerpente[i].conteudo[j].x, dadosJ.aSerpente[i].conteudo[j].y);
 			}
 
 		}
 	}
 
-	for (int i = 0; i < nAuto; i++) {
-		int x, y;
-		char c = 'a';
-		for (j = 0; i < iSerpente; j++) {
+	for (i = 0; i < nAuto; i++) {
+		
+		for (j = 0; j < iSerpente; j++) {
 			x = dadosJ.aSerpente[i].conteudo[j].x;
 			y = dadosJ.aSerpente[i].conteudo[j].y;
 			dadosJ.mapaJogo.conteudo[x][y].caracter = c;
-			
+
 		}
 		c++;
 	}

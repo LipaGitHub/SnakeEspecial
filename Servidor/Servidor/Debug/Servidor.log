@@ -1,2 +1,32 @@
-﻿  Servidor.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Servidor.exe
+﻿  ServidorMain.c
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(254): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(265): warning C4473: 'fscanf_s' : not enough arguments passed for format string
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(265): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(265): note: the missing variadic argument 2 is required by format string '%c'
+  c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(265): note: this argument is used as a buffer size
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(278): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(310): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(313): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(316): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(319): warning C4047: '=': 'char' differs in levels of indirection from 'char [2]'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(322): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(325): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(10): warning C4133: 'initializing': incompatible types - from 'unsigned short [16]' to 'LPSTR'
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(38): warning C4133: 'function': incompatible types - from 'char [50]' to 'wchar_t *'
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(38): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\corecrt_wstring.h(121): note: see declaration of 'wcscpy'
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(118): warning C4098: 'criaRecursos': 'void' function returning a value
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(48): warning C4101: 'tam': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(135): warning C4101: 'hThreadRecebe': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(143): warning C4101: 'f': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(141): warning C4101: 'ver': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(135): warning C4101: 'hThreadMoveSerp': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(134): warning C4101: 'threadId': unreferenced local variable
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(240): warning C4133: 'function': incompatible types - from 'char [18]' to 'const wchar_t *const '
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(249): warning C4022: 'ReadFile': pointer mismatch for actual parameter 2
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(227): warning C4133: 'initializing': incompatible types - from 'Envio *' to 'Ident *'
+c:\users\franc\documents\github\snakeespecial\servidor\servidorheader.h(239): warning C4715: 'inverte': not all control paths return a value
+c:\users\franc\documents\github\snakeespecial\servidor\servidormain.c(249): warning C4700: uninitialized local variable 'numJ' used
+  Servidor.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Servidor.exe
   Servidor.vcxproj -> C:\Users\franc\Documents\GitHub\SnakeEspecial\Servidor\Debug\Servidor.pdb (Full PDB)

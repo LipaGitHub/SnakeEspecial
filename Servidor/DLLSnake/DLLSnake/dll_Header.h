@@ -8,6 +8,10 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+
 #define ficheiro "mapa.txt"
 #define NJogadores 20
 #define L 100
