@@ -3,9 +3,6 @@
 HHOOK hook;
 KBDLLHOOKSTRUCT kbdStruct;
 
-//Serpente *sJogo;
-//Obj *oJogo;
-//Jogador cJogo[NJogadores];
 HANDLE objMap1, f1;
 BOOL fConnected = FALSE;
 DWORD dwThreadId = 0,sbToWrite, sbWriten;
@@ -35,10 +32,10 @@ void valInicial() {
 
 int logar(Ident * msg) {
 	for (int i = 0; i < NJogadores; i++) {
-		if (dadosJ->jog[i].pid == -1) {
-			dadosJ->jog[i].pid = msg->pid;
-			dadosJ->aSerpente[i].dono = i;
-			_tcscpy(dadosJ->jog[i].user, msg->user);
+		if (dadosJ.jog[i].pid == -1) {
+			dadosJ.jog[i].pid = msg->pid;
+			dadosJ.aSerpente[i].dono = i;
+			_tcscpy(dadosJ.jog[i].user, msg->user);
 			return i;
 			break;
 		}
@@ -61,7 +58,7 @@ void criaRecursos() {
 	//Saber o tamanho do ficheiro 1 em bytes
 	//GetFileSizeEx(f1, &tam);
 	//Criar um objecto para o mapeamento para o ficheiro aberto
-
+	/* Memoria Partilhada
 	objMap1 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(Jogo), snake);
 
 	if (objMap1 == NULL) {
@@ -79,7 +76,43 @@ void criaRecursos() {
 	_tprintf(TEXT("Criação do Pipe Para os CLientes"));
 
 
+	*/
+	/*
 
+	objMap2 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(Mapa)*(dadosJ->mapaSerp.nLinhas), TEXT("nLinhas"));
+
+	if (objMap2 == NULL) {
+	_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
+
+	}
+
+	dadosJ->mapaSerp = (mapa *)MapViewOfFile(objMap2, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->linha));
+
+	if (dadosJ->mapaSerp == NULL) {
+	_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
+	CloseHandle(objMap2);
+
+	}
+	dadosJ->mapaJogo = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
+
+	for (i = 0; i < dadosJ->linha; i++) {
+	dadosJ->mapaJogo[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
+	objMap3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa)*(dadosJ->coluna), TEXT("nColunas"));
+
+	if (objMap3 == NULL) {
+	_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
+
+	}
+
+	dadosJ->mapaSerp[i] = (mapa *)MapViewOfFile(objMap3, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->coluna));
+
+	if (dadosJ->mapaSerp[i] == NULL) {
+	_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
+	CloseHandle(objMap3);
+
+	}
+	}
+	*/
 	iniciaVarJogo();
 
 	return 0;
@@ -137,6 +170,7 @@ int _tmain(int argc, TCHAR ** argv[]) {
 
 	while (1) {
 
+		
 		hPipe = CreateNamedPipe(lpszPipename, PIPE_ACCESS_DUPLEX, PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT, PIPE_UNLIMITED_INSTANCES, BUFSIZE, BUFSIZE, 0, NULL);
 		if (hPipe == INVALID_HANDLE_VALUE) {
 			_tprintf(TEXT("Criação do namedPipe Falhou erro %d"), GetLastError());
@@ -159,7 +193,7 @@ int _tmain(int argc, TCHAR ** argv[]) {
 
 	}
 
-
+	
 
 	WaitForSingleObject(hThreadMoveSerp, INFINITE);
 	return 0;
@@ -168,8 +202,8 @@ int _tmain(int argc, TCHAR ** argv[]) {
 DWORD WINAPI ThreadMoveSerpente(LPVOID param) {
 	do {
 		for (int i = 0; i < NJogadores; i++)
-			if (dadosJ->aSerpente[i].tamanho > 0) {
-				mover(&dadosJ->aSerpente[i]);
+			if (dadosJ.aSerpente[i].tamanho > 0) {
+				mover(&dadosJ.aSerpente[i]);
 			}
 
 		addSerpente();
@@ -280,7 +314,7 @@ DWORD WINAPI ThreadAtendeCliente(LPVOID param) {
 				direcaoTeste = 'w';
 			}
 			
-					moverDirecao(&dadosJ->aSerpente[pchRequest->idSerp], direcaoTeste);
+					moverDirecao(&dadosJ.aSerpente[pchRequest->idSerp], direcaoTeste);
 			
 			//_tprintf(TEXT("%s"),pchRequest);
 

@@ -10,8 +10,8 @@
 #include <ctype.h>
 #define ficheiro "mapa.txt"
 #define NJogadores 20
-#define L 20
-#define C 25
+#define L 100
+#define C 100
 //Este .h deve ser incluído no projeto que o vai usar (modo implícito)
 #define TAM 256
 //Esta macro é definida pelo sistema caso estejamos na DLL (<DLL_IMP>_EXPORTS definida)
@@ -38,7 +38,12 @@ typedef struct {
 typedef struct {
 	int y, x;
 	char caracter;
-}mapa;
+}Celula;
+
+typedef struct {
+	Celula conteudo[L][C];
+	int nLinhas, nColunas;
+}Mapa;
 
 typedef struct {
 	int tamanho, velocidade, durEfeito, dono;
@@ -69,15 +74,14 @@ typedef struct {
 }Obj;
 
 typedef struct {
-	int linha, coluna;
-	mapa **mapaJogo, **mapaSerp;
+	Mapa mapaJogo;
 	Serpente aSerpente[NJogadores];
 	Jogador jog[NJogadores];
-	Obj * objetos;
+	Obj *objetos; // S estiver em memoria partilhada pode ser acedido se for malloc não
 
 }Jogo;
 
-extern TP_SO2_DLL_API Jogo *dadosJ;
+extern TP_SO2_DLL_API Mapa *vistaFinal;
 
 TP_SO2_DLL_API void imprimeMapa();
 

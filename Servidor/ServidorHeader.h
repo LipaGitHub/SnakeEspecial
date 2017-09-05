@@ -1,27 +1,34 @@
 
 #include "DLLSnake\DLLSnake\dll_Header.h"
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+
+Jogo dadosJ;
 int iLinhas, iColunas, iSerpente, nObj, dObj, pObj, nAuto;
 HANDLE objMap2, objMap3;
 void iniciaVarJogo() {
 
-	dadosJ->linha = iLinhas;
-	dadosJ->coluna = iColunas;
+	dadosJ.mapaJogo.nLinhas = iLinhas;
+	dadosJ.mapaJogo.nColunas = iColunas;
 	for (int i = 0; i < NJogadores; i++) {
-		dadosJ->aSerpente[i].tamanho = iSerpente;
-		dadosJ->jog[i].pid = -1;
-		dadosJ->aSerpente[i].dono = -1;
+		dadosJ.aSerpente[i].tamanho = iSerpente;
+		dadosJ.jog[i].pid = -1;
+		dadosJ.aSerpente[i].dono = -1;
+		dadosJ.aSerpente[i].inverte = false;
+		dadosJ.aSerpente[i].morte = false;
 	}
-	dadosJ->objetos = (Obj *)malloc(sizeof(Obj*)*nObj);
+	dadosJ.objetos = (Obj *)malloc(sizeof(Obj*)*nObj);
 	for (int i = 0; i < nObj; i++) {
-		dadosJ->objetos[i].duracao = dObj;
-		dadosJ->objetos[i].id = i;
-		dadosJ->objetos[i].probabilidade = pObj;
+		dadosJ.objetos[i].duracao = dObj;
+		dadosJ.objetos[i].id = i;
+		dadosJ.objetos[i].probabilidade = pObj;
 	}
 }
 
 
 void iniciaSerpente() {
-
+	/*
 	dadosJ->aSerpente[0].direcao = 's';
 
 	dadosJ->aSerpente[0].tamanho = 5;
@@ -31,7 +38,7 @@ void iniciaSerpente() {
 	dadosJ->aSerpente[0].conteudo[1].x = 3; dadosJ->aSerpente[0].conteudo[1].y = 2;
 	dadosJ->aSerpente[0].conteudo[2].x = 4; dadosJ->aSerpente[0].conteudo[2].y = 2;
 	dadosJ->aSerpente[0].conteudo[3].x = 4; dadosJ->aSerpente[0].conteudo[3].y = 3;
-	dadosJ->aSerpente[0].conteudo[4].x = 5; dadosJ->aSerpente[0].conteudo[4].y = 3;
+	dadosJ->aSerpente[0].conteudo[4].x = 5; dadosJ->aSerpente[0].conteudo[4].y = 3;*/
 }
 /*
 bool verSerpente(Serpente s) {
@@ -150,7 +157,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		py = s->conteudo->y;
 		px = s->conteudo->x;
 		py--;
-		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
+		if (dadosJ.mapaJogo.conteudo[py][px].caracter == '1' || dadosJ.mapaJogo.conteudo[py][px].caracter == '0') {
 			_tprintf(TEXT("Parede"));
 
 			s->morte = true;
@@ -163,7 +170,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		py = s->conteudo->y;
 		px = s->conteudo->x;
 		py++;
-		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
+		if (dadosJ.mapaJogo.conteudo[py][px].caracter == '1' || dadosJ.mapaJogo.conteudo[py][px].caracter == '0') {
 			s->morte = true;
 		}
 		else {
@@ -174,7 +181,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		py = s->conteudo->y;
 		px = s->conteudo->x;
 		px--;
-		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
+		if (dadosJ.mapaJogo.conteudo[py][px].caracter == '1' || dadosJ.mapaJogo.conteudo[py][px].caracter == '0') {
 			s->morte = true;
 		}
 		else {
@@ -186,7 +193,7 @@ void mover(Serpente * s) { // Alterar pra JOGO!!!!!!!
 		px = s->conteudo->x;
 		px++;
 
-		if (dadosJ->mapaJogo[py][px].caracter == '1' || dadosJ->mapaJogo[py][px].caracter == '0') {
+		if (dadosJ.mapaJogo.conteudo[py][px].caracter == '1' || dadosJ.mapaJogo.conteudo[py][px].caracter == '0') {
 			s->morte = true;
 		}
 		else {
@@ -233,9 +240,9 @@ void LeMapa() {
 
 	for (i = 0; i < L; i++) {
 		for (j = 0; j < C; j++) {
-			dadosJ->mapaJogo[i][j].y = i;
-			dadosJ->mapaJogo[i][j].x = j;
-			fscanf_s(f, "%c", &(dadosJ->mapaJogo[i][j].caracter));
+			dadosJ.mapaJogo.conteudo[i][j].y = i;
+			dadosJ.mapaJogo.conteudo[i][j].x = j;
+			fscanf_s(f, "%c", &(dadosJ.mapaJogo.conteudo[i][j].caracter));
 
 		}
 	}
@@ -246,54 +253,60 @@ void LeMapa() {
 }
 
 void criaMapa() {
-	int i, j;
-	objMap2 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa)*(dadosJ->linha), TEXT("nLinhas"));
+	srand(time(NULL));   // should only be called once
+	int r = rand();
+	int i, j, calcX, calcY, auxX, dir;
+	double areaDisp;
 
-	if (objMap2 == NULL) {
-		_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
-
-	}
-
-	dadosJ->mapaSerp = (mapa *)MapViewOfFile(objMap2, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->linha));
-
-	if (dadosJ->mapaSerp == NULL) {
-		_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
-		CloseHandle(objMap2);
-
-	}
-	dadosJ->mapaJogo = (mapa *)malloc(sizeof(mapa)*(dadosJ->linha));
-
-	for (i = 0; i < dadosJ->linha; i++) {
-		dadosJ->mapaJogo[i] = (mapa *)malloc(sizeof(mapa)*(dadosJ->coluna));
-		objMap3 = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(mapa)*(dadosJ->coluna), TEXT("nColunas"));
-
-		if (objMap3 == NULL) {
-			_tprintf(TEXT("[Erro]Criar objectos mapeamentos(%d)\n"), GetLastError());
-
-		}
-
-		dadosJ->mapaSerp[i] = (mapa *)MapViewOfFile(objMap3, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(mapa)*(dadosJ->coluna));
-
-		if (dadosJ->mapaSerp[i] == NULL) {
-			_tprintf(TEXT("[Erro]Mapear para memória(%d)\n"), GetLastError());
-			CloseHandle(objMap3);
-
-		}
-	}
-
-
-	for (i = 0; i < dadosJ->linha; i++) {
-		for (j = 0; j < dadosJ->coluna; j++) {
-			if (i == 0 || i == (dadosJ->linha - 1)) {
-				dadosJ->mapaJogo[i][j].caracter = '1';
+	for (i = 0; i < dadosJ.mapaJogo.nLinhas; i++) {
+		for (j = 0; j < dadosJ.mapaJogo.nColunas; j++) {
+			if (i == 0 || i == (dadosJ.mapaJogo.nLinhas - 1)) {
+				dadosJ.mapaJogo.conteudo[i][j].caracter = '1';
 			}
-			else if (j == 0 || j == (dadosJ->coluna - 1)) {
-				dadosJ->mapaJogo[i][j].caracter = '0';
+			else if (j == 0 || j == (dadosJ.mapaJogo.nColunas - 1)) {
+				dadosJ.mapaJogo.conteudo[i][j].caracter = '0';
 			}
 			else
-				dadosJ->mapaJogo[i][j].caracter = ' ';
+				dadosJ.mapaJogo.conteudo[i][j].caracter = ' ';
 		}
 	}
+	if (nAuto != 0) {
+
+		calcX = dadosJ.mapaJogo.nColunas - 2;
+		calcY = dadosJ.mapaJogo.nLinhas - 2;
+
+		areaDisp = calcY - 2 / nAuto;
+		areaDisp = trunc(areaDisp);
+		r = rand()*(calcX - 2 - iSerpente) + 2;
+
+		for (i = 0; i < nAuto; i++) {
+			dadosJ.aSerpente[i].conteudo = (Posicao*)malloc(sizeof(Posicao)*iSerpente);
+			dadosJ.aSerpente[i].dono = -2;
+
+			dir = rand() * 4;
+			if (dir == 0) {
+				dadosJ.aSerpente[i].direcao = "w";
+			}
+			else if (dir == 1) {
+				dadosJ.aSerpente[i].direcao = "a";
+			}
+			else if (dir == 2) {
+				dadosJ.aSerpente[i].direcao = "s";
+			}
+			else if (dir == 3) {
+				dadosJ.aSerpente[i].direcao = "d";
+			}
+
+			auxX = areaDisp;
+			for (j = 0; j < iSerpente; j++) {
+				dadosJ.aSerpente[i].conteudo[j].x = r;
+				dadosJ.aSerpente[i].conteudo[j].y = areaDisp*(j + 1);
+				r++;
+			}
+
+		}
+	}
+
 
 
 	return;
@@ -301,20 +314,20 @@ void criaMapa() {
 
 
 void addSerpente() {
-
-	for (int i = 0; i < dadosJ->linha; i++) {
-		for (int j = 0; j < dadosJ->coluna; j++) {
-			dadosJ->mapaSerp[i][j].caracter = dadosJ->mapaJogo[i][j].caracter;
+	/*
+	for (int i = 0; i < dadosJ.mapaSerp.nLinhas; i++) {
+		for (int j = 0; j < dadosJ.mapaSerp.nColunas; j++) {
+			dadosJ->mapaSerp.conteudo[i][j].caracter = dadosJ->mapaJogo.conteudo[i][j].caracter;
 		}
 	}
 	for (int i = 0; i < NJogadores; i++) {
 		if (dadosJ->aSerpente[i].tamanho > 0)
 			if ((dadosJ->aSerpente[i]).morte == false) {
 				for (int k = 0; k < dadosJ->aSerpente[i].tamanho; k++) {
-					dadosJ->mapaSerp[dadosJ->aSerpente[i].conteudo[k].y][dadosJ->aSerpente[i].conteudo[k].x].caracter = '3';
+					dadosJ->mapaSerp.conteudo[dadosJ->aSerpente[i].conteudo[k].y][dadosJ->aSerpente[i].conteudo[k].x].caracter = '3';
 				}
 			}
-	}
+	}*/
 
 }
 
